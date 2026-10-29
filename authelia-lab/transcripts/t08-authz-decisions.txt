@@ -1,0 +1,24 @@
+$ # What the proxy asks Authelia, and what Authelia answers. No session cookie:
+$ ./authz.sh auth-request https://app.lab.local:8443/
+HTTP/1.1 401 Unauthorized
+Location: https://auth.lab.local:9091/?rd=https%3A%2F%2Fapp.lab.local%3A8443%2F&rm=GET
+
+$ # Same question, forward-auth flavour:
+HTTP/1.1 400 Bad Request
+
+$ # With adas session cookie: 200 and the identity headers the proxy passes to the app
+HTTP/1.1 200 OK
+Remote-User: ada
+Remote-Groups: admins,readers
+Remote-Name: Ada Lab
+Remote-Email: ada@lab.local
+
+$ # The bypass site, no cookie at all:
+HTTP/1.1 200 OK
+
+$ # The deny site, even with adas valid session:
+HTTP/1.1 403 Forbidden
+
+$ # The vault (two_factor) with only a first-factor session so far:
+HTTP/1.1 401 Unauthorized
+Location: https://auth.lab.local:9091/?rd=https%3A%2F%2Fvault.lab.local%3A8445%2F&rm=GET

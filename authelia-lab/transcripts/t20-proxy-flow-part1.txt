@@ -1,0 +1,45 @@
+$ # 1. The public page, no login (rule: bypass):
+$ curl https://public.lab.local:8444/
+-> HTTP 200
+   APP PAGE
+   site: public.lab.local:8444
+   path: /
+   user: (nobody - anonymous)
+   groups: (none)
+$ # 2. The app, anonymous (rule: one_factor, no session yet):
+$ curl https://app.lab.local:8443/
+-> HTTP 302
+   Location: https://auth.lab.local:9091/?rd=https://app.lab.local:8443/&rm=GET
+   <html>
+   <head><title>302 Found</title></head>
+   <body>
+   <center><h1>302 Found</h1></center>
+   <hr><center>nginx/1.24.0 (Ubuntu)</center>
+   </body>
+   </html>
+$ # 3. The app with adas session:
+$ curl https://app.lab.local:8443/ -b cookies-ada.txt
+-> HTTP 200
+   APP PAGE
+   site: app.lab.local:8443
+   path: /
+   user: ada
+   groups: admins,readers
+$ # 4. The /admin corner with graces session (readers group):
+$ curl https://app.lab.local:8443/admin -b cookies-grace.txt
+-> HTTP 403
+   <html>
+   <head><title>403 Forbidden</title></head>
+   <body>
+   <center><h1>403 Forbidden</h1></center>
+   <hr><center>nginx/1.24.0 (Ubuntu)</center>
+   </body>
+   </html>
+$ # 5. The /admin corner with adas session (admins group):
+$ curl https://app.lab.local:8443/admin -b cookies-ada.txt
+-> HTTP 200
+   APP PAGE
+   site: app.lab.local:8443
+   path: /admin
+   user: ada
+   groups: admins,readers

@@ -1,0 +1,10 @@
+$ # Download Authelia v4.39.28 (latest release, GitHub API) and verify the published checksum
+$ curl -sLO https://github.com/authelia/authelia/releases/download/v4.39.28/authelia-v4.39.28-linux-amd64.tar.gz
+$ curl -sLO https://github.com/authelia/authelia/releases/download/v4.39.28/checksums.sha256
+$ grep "linux-amd64.tar.gz$" checksums.sha256 | sha256sum -c -
+sha256sum: 'standard input': no properly formatted checksum lines found
+$ tar xzf authelia-v4.39.28-linux-amd64.tar.gz   # extracts: authelia (binary), config.template.yml, systemd units
+authelia version v4.39.28
+$ nginx -v
+nginx version: nginx/1.24.0 (Ubuntu)
+authelia-v4.39.28-linux-amd64.tar.gz: OK

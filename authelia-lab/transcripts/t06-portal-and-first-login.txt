@@ -1,0 +1,12 @@
+$ # Lab names added to no_proxy first: the sandbox exports an egress proxy that otherwise swallows them.
+$ curl --cacert ca.crt --resolve auth.lab.local:9091:127.0.0.1 https://auth.lab.local:9091/
+HTTP 200, 2588 bytes
+<title></title>
+
+$ curl --cacert ca.crt --resolve auth.lab.local:9091:127.0.0.1 https://auth.lab.local:9091/api/health
+{"status":"OK"}
+
+$ # Wrong password first: the refusal
+$ curl -X POST https://auth.lab.local:9091/api/firstfactor -d {"username":"ada","password":"wrong-on-purpose"}
+{"status":"KO","message":"Authentication failed. Check your credentials."}
+HTTP 401

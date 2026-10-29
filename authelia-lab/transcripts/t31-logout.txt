@@ -1,0 +1,13 @@
+$ # Fresh sign-in, and user/info now agrees the TOTP device exists:
+{"display_name":"Ada Lab","emails":["a*a@lab.local"],"method":"","has_totp":false,"has_webauthn":false,"has_duo":false}
+$ ./authz.sh auth-request https://app.lab.local:8443/ cookies-logout.txt
+HTTP/1.1 200 OK
+Remote-User: ada
+Remote-Groups: admins,readers
+Remote-Name: Ada Lab
+Remote-Email: ada@lab.local
+$ curl -X POST https://auth.lab.local:9091/api/logout -b cookies-logout.txt
+{"status":"OK","data":{"safeTargetURL":false}}
+$ ./authz.sh auth-request https://app.lab.local:8443/ cookies-logout.txt   # the same cookie jar, after logout
+HTTP/1.1 401 Unauthorized
+Location: https://auth.lab.local:9091/?rd=https%3A%2F%2Fapp.lab.local%3A8443%2F&rm=GET

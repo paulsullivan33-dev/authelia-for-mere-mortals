@@ -1,0 +1,19 @@
+# Lab user file. Both passwords are throwaway lab passwords, stated in the guide:
+#   ada   -> foxglove-lantern-42   (groups: admins, readers)
+#   grace -> harbour-pencil-17     (groups: readers)
+users:
+  ada:
+    disabled: false
+    displayname: 'Ada Lab'
+    password: '$argon2id$v=19$m=65536,t=3,p=4$aOdus8+YoUsWS+sqkQMWYw$tNP6ch5YC0s0LI1wLj5QdBe5LP+fw+XpeRLfSAUS9CA'
+    email: ada@lab.local
+    groups:
+      - admins
+      - readers
+  grace:
+    disabled: false
+    displayname: 'Grace Lab'
+    password: '$argon2id$v=19$m=65536,t=3,p=4$kOlMetad10bdo0YWc/OR8g$jNNnb0IWQ5bVvlDJxQhgKI/BXwPM089Xc5MfjwYHBec'
+    email: grace@lab.local
+    groups:
+      - readers

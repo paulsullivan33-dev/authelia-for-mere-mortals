@@ -1,0 +1,24 @@
+$ curl https://auth.lab.local:9091/api/secondfactor/totp/register -b cookies-ada.txt   # step 1: the choices on offer
+{
+  "status": "OK",
+  "data": {
+    "algorithm": "SHA1",
+    "algorithms": [
+      "SHA1"
+    ],
+    "length": 6,
+    "lengths": [
+      6
+    ],
+    "period": 30,
+    "periods": [
+      30
+    ]
+  }
+}
+$ curl -X PUT .../api/secondfactor/totp/register -d {"algorithm":"SHA1","period":30,"length":6}   # step 2
+{
+  "status": "OK",
+  "base32_secret": "CSXVHVVT5TYKITF64UJ26QV55647KXAHVYLSDZ5QRTXEHLYHGC5Q",
+  "otpauth_url": "otpauth://totp/lab.local:ada?algorithm=SHA1&digits=6&issuer=lab.local&period=30&secret=CSXVHVVT5TYKITF64UJ26QV55647KXAHVYLSDZ5QRTXEHLYHGC5Q"
+}

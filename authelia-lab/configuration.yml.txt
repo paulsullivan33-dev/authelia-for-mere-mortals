@@ -1,0 +1,106 @@
+# Authelia lab configuration. Every secret in it is a throwaway
+# generated for this lab and quoted in the guide's lab notes.
+theme: 'auto'
+
+server:
+  address: 'tcp://127.0.0.1:9091/'
+  tls:
+    certificate: '/home/hatch/workspace/authelia-lab-work/run/certs/server.crt'
+    key: '/home/hatch/workspace/authelia-lab-work/run/certs/server.key'
+
+log:
+  level: 'info'
+
+totp:
+  issuer: 'lab.local'
+
+authentication_backend:
+  file:
+    path: '/home/hatch/workspace/authelia-lab-work/run/users.yml'
+
+access_control:
+  default_policy: 'deny'
+  rules:
+    # A page anyone may read, no login at all.
+    - domain: 'public.lab.local'
+      policy: 'bypass'
+    # The /admin corner of the app: admins only, password is enough.
+    - domain: 'app.lab.local'
+      resources:
+        - '^/admin($|/.*)'
+      subject: 'group:admins'
+      policy: 'one_factor'
+    # The app itself: any signed-in user.
+    - domain: 'app.lab.local'
+      policy: 'one_factor'
+    # The vault: password plus a second factor.
+    - domain: 'vault.lab.local'
+      policy: 'two_factor'
+    # Sealed off: nobody gets in, signed in or not.
+    - domain: 'blocked.lab.local'
+      policy: 'deny'
+
+session:
+  name: 'authelia_session'
+  secret: '<throwaway lab secret, 64 chars>'
+  expiration: '1h'
+  inactivity: '10m'
+  cookies:
+    - domain: 'lab.local'
+      authelia_url: 'https://auth.lab.local:9091'
+      default_redirection_url: 'https://app.lab.local:8443/'
+
+regulation:
+  max_retries: 3
+  find_time: '2m'
+  ban_time: '5m'
+
+storage:
+  encryption_key: '<throwaway lab secret, 64 chars>'
+  local:
+    path: '/home/hatch/workspace/authelia-lab-work/run/data/db.sqlite3'
+
+notifier:
+  filesystem:
+    filename: '/home/hatch/workspace/authelia-lab-work/run/data/notifications.txt'
+
+identity_validation:
+  reset_password:
+    jwt_secret: '<throwaway lab secret, 64 chars>'
+
+# The sandbox blocks outbound UDP, so the startup NTP check is off;
+# on a normal network you would leave it on.
+ntp:
+  address: 'udp://time.cloudflare.com:123'
+  disable_startup_check: true
+
+identity_providers:
+  oidc:
+    hmac_secret: '<throwaway lab secret, 64 chars>'
+    jwks:
+      - key_id: 'labkey'
+        algorithm: 'RS256'
+        use: 'sig'
+        key: |
+          <lab RSA private key PEM, generated in t03>
+    clients:
+      - client_id: 'lab-app'
+        client_name: 'Lab Photo App'
+        client_secret: '<argon2id digest from t02>'
+        public: false
+        authorization_policy: 'one_factor'
+        grant_types:
+          - 'authorization_code'
+          - 'refresh_token'
+        response_types:
+          - 'code'
+        redirect_uris:
+          - 'https://app.lab.local:8443/callback'
+        scopes:
+          - 'openid'
+          - 'offline_access'
+          - 'profile'
+          - 'email'
+          - 'groups'
+        userinfo_signed_response_alg: 'none'
+        token_endpoint_auth_method: 'client_secret_basic'

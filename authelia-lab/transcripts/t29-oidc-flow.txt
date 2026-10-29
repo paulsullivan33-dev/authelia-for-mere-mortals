@@ -1,0 +1,8 @@
+$ # Second attempt at the whole dance, with the consent field named as the API expects:
+$ curl "<authorize URL>" -b cookies-ada.txt   -> 303 to the consent page, flow_id in the address
+Location: https://auth.lab.local:9091/consent/openid/decision?flow=openid_connect&flow_id=8344e400-3790-410e-9073-f58cfac3e2c8
+$ curl -X POST https://auth.lab.local:9091/api/oidc/consent -d {"flow_id":"<flow id>","client_id":"lab-app","consent":true}
+{"status":"OK"}
+$ curl "<the consent answers redirect>" -b cookies-ada.txt
+HTTP 303
+Location: https://app.lab.local:8443/callback?code=<the code>&iss=https%3A%2F%2Fauth.lab.local%3A9091&scope=openid+profile+email+groups+offline_access&state=labstate123

@@ -1,0 +1,37 @@
+$ # 6. The vault with the session that completed TOTP (t19):
+$ curl https://vault.lab.local:8445/ -b cookies-vault.txt
+-> HTTP 200
+   APP PAGE
+   site: vault.lab.local:8445
+   path: /
+   user: ada
+   groups: admins,readers
+$ # 7. The vault with adas other session, password only:
+$ curl https://vault.lab.local:8445/ -b cookies-ada.txt
+-> HTTP 302
+   Location: https://auth.lab.local:9091/?rd=https://vault.lab.local:8445/&rm=GET
+   <html>
+   <head><title>302 Found</title></head>
+   <body>
+   <center><h1>302 Found</h1></center>
+   <hr><center>nginx/1.24.0 (Ubuntu)</center>
+   </body>
+   </html>
+$ # 8. The sealed site with a fully signed-in (2FA) session - still refused:
+$ curl https://blocked.lab.local:8446/ -b cookies-vault.txt
+-> HTTP 403
+   <html>
+   <head><title>403 Forbidden</title></head>
+   <body>
+   <center><h1>403 Forbidden</h1></center>
+   <hr><center>nginx/1.24.0 (Ubuntu)</center>
+   </body>
+   </html>
+$ # 9. The public page again, this time signed in - the page now knows who is visiting:
+$ curl https://public.lab.local:8444/ -b cookies-ada.txt
+-> HTTP 200
+   APP PAGE
+   site: public.lab.local:8444
+   path: /
+   user: ada
+   groups: admins,readers

@@ -1,0 +1,16 @@
+$ curl -X PUT https://auth.lab.local:9091/api/user/session/elevation -d {"otc":"3K4CEL2M"}
+{
+  "status": "OK"
+}
+$ curl https://auth.lab.local:9091/api/user/session/elevation -b cookies-ada.txt
+{
+  "status": "OK",
+  "data": {
+    "require_second_factor": false,
+    "skip_second_factor": false,
+    "can_skip_second_factor": false,
+    "factor_knowledge": true,
+    "elevated": true,
+    "expires": 599
+  }
+}

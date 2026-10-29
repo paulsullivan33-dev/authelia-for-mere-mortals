@@ -1,0 +1,2 @@
+$ authelia validate-config --config configuration.yml
+Configuration parsed and loaded successfully (after adding the offline_access scope the validator asked for).

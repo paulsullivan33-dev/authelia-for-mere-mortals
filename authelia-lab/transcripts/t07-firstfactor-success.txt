@@ -1,0 +1,22 @@
+$ # The right password: ada signs in (cookie jar kept for later calls)
+$ curl -X POST https://auth.lab.local:9091/api/firstfactor -d {"username":"ada","password":"foxglove-lantern-42"} -c cookies-ada.txt
+{"status":"OK"}
+HTTP 200
+
+$ # The session cookie Authelia set (HttpOnly, Secure, SameSite=Lax, domain lab.local)
+#HttpOnly_.lab.local / authelia_session
+
+$ curl https://auth.lab.local:9091/api/user/info -b cookies-ada.txt
+{
+  "status": "OK",
+  "data": {
+    "display_name": "Ada Lab",
+    "emails": [
+      "a*a@lab.local"
+    ],
+    "method": "",
+    "has_totp": false,
+    "has_webauthn": false,
+    "has_duo": false
+  }
+}

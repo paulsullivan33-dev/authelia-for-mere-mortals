@@ -1,0 +1,37 @@
+$ curl -X POST https://auth.lab.local:9091/api/oidc/token -u lab-app:<client secret> -d grant_type=authorization_code -d code=<the code> -d redirect_uri=https://app.lab.local:8443/callback
+{
+  "token_type": "bearer",
+  "expires_in": 3599,
+  "scope": "openid profile email groups offline_access",
+  "has_access_token": true,
+  "has_id_token": true,
+  "has_refresh_token": true
+}
+
+$ # The id_token is a JWT. Its payload, decoded:
+{
+  "iss": "https://auth.lab.local:9091",
+  "sub": "3f35844f-08dc-4b1e-9891-c22daee30bbc",
+  "aud": [
+    "lab-app"
+  ],
+  "name": null,
+  "email": null,
+  "groups": null,
+  "amr": [
+    "pwd",
+    "kba"
+  ],
+  "auth_time": 1793300846
+}
+
+$ curl https://auth.lab.local:9091/api/oidc/userinfo -H "Authorization: Bearer <access token>"
+{
+  "sub": "3f35844f-08dc-4b1e-9891-c22daee30bbc",
+  "name": "Ada Lab",
+  "email": "ada@lab.local",
+  "groups": [
+    "admins",
+    "readers"
+  ]
+}

@@ -1,0 +1,4 @@
+$ # The "app" sends adas browser to Authelia (she is already signed in there):
+$ curl "https://auth.lab.local:9091/api/oidc/authorization?client_id=lab-app&...&response_type=code&scope=openid profile email groups offline_access&state=labstate123" -b cookies-ada.txt
+HTTP 303
+Location: https://auth.lab.local:9091/consent/openid/decision?flow=openid_connect&flow_id=8e9e15fb-7241-48e6-94c5-9eb05ba2dbe3

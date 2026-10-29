@@ -1,0 +1,4 @@
+$ # Following the consent answer back to the authorization endpoint:
+$ curl "<that URL>" -b cookies-ada.txt
+HTTP 303
+Location: https://app.lab.local:8443/callback?error=access_denied&error_description=The+resource+owner+or+authorization+server+denied+the+request.+Make+sure+that+the+request+you+are+making+is+valid.+Maybe+the+credential+or+request+parameters+you+are+using+are+limited+in+scope+or+otherwise+restricted.&iss=https%3A%2F%2Fauth.lab.local%3A9091&state=labstate123

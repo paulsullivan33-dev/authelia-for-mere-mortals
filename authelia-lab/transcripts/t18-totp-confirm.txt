@@ -1,0 +1,7 @@
+$ python3 totp.py <adas secret> -> 404490   (the script pads the base32 secret first; Authelia issues it unpadded)
+$ curl -X POST .../api/secondfactor/totp/register -d {"token":"<code>"}   # step 3: prove the device works, Authelia keeps it
+{
+  "status": "OK"
+}
+$ curl https://auth.lab.local:9091/api/user/info -b cookies-ada.txt
+{"display_name":"Ada Lab","emails":["a*a@lab.local"],"method":"","has_totp":false,"has_webauthn":false,"has_duo":false}

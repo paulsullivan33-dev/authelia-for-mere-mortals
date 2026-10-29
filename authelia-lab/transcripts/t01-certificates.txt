@@ -1,0 +1,5 @@
+$ # A throwaway lab CA and one server certificate covering all lab names
+CA created: ca.crt / ca.key
+Server certificate created: server.crt (SANs below)
+X509v3 Subject Alternative Name: 
+    DNS:auth.lab.local, DNS:app.lab.local, DNS:public.lab.local, DNS:vault.lab.local, DNS:blocked.lab.local

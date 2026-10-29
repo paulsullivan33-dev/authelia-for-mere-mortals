@@ -1,0 +1,9 @@
+$ curl -X POST https://auth.lab.local:9091/api/user/session/elevation -b cookies-ada.txt -c cookies-ada.txt
+{
+  "status": "OK",
+  "data": {
+    "delete_id": "ElX2KGCrRiSsQAyIkfzCAQ"
+  }
+}
+
+$ # The filesystem notifier wrote the "email" to notifications.txt. What ada would read in her inbox:

@@ -1,0 +1,15 @@
+$ # A clean sign-in from scratch, in a fresh cookie jar:
+$ curl -X POST .../api/firstfactor -d {"username":"ada","password":"foxglove-lantern-42"} -c cookies-vault.txt
+{"status":"OK"}
+$ ./authz.sh auth-request https://vault.lab.local:8445/ cookies-vault.txt    # password alone: not enough
+HTTP/1.1 401 Unauthorized
+Location: https://auth.lab.local:9091/?rd=https%3A%2F%2Fvault.lab.local%3A8445%2F&rm=GET
+$ python3 totp.py <secret> -> 583352
+$ curl -X POST .../api/secondfactor/totp -d {"token":"<code>"} -b cookies-vault.txt
+{"status":"OK","data":{"redirect":"https://app.lab.local:8443/"}}
+$ ./authz.sh auth-request https://vault.lab.local:8445/ cookies-vault.txt    # password + code: in
+HTTP/1.1 200 OK
+Remote-User: ada
+Remote-Groups: admins,readers
+Remote-Name: Ada Lab
+Remote-Email: ada@lab.local

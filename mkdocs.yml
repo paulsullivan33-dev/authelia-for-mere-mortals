@@ -1,0 +1,38 @@
+site_name: Authelia for Mere Mortals
+site_description: A sign-in portal you run yourself, standing in front of your other services. One careful login with a password and a second factor, policies you write per service, and an identity your other apps can trust, with the limits stated plainly.
+site_url: https://paulsullivan33-dev.github.io/authelia-for-mere-mortals/
+copyright: "Copyright © 2026 Paul Sullivan. The writing is licensed under CC BY 4.0; code examples and lab scripts are licensed under MIT."
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+
+markdown_extensions:
+  - tables
+  - fenced_code
+  - codehilite
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - What Authelia Is: what-authelia-is.md
+  - The Moving Parts: the-moving-parts.md
+  - Installing Authelia: installing-authelia.md
+  - Your First Login: your-first-login.md
+  - Protecting a Service End to End: protecting-a-service.md
+  - Access Rules and Policies: access-rules-and-policies.md
+  - Two-Factor with TOTP: two-factor-with-totp.md
+  - Authelia as an Identity Provider: authelia-as-an-identity-provider.md
+  - Notifications and Password Reset: notifications-and-password-reset.md
+  - Recipes: recipes.md
+  - The Neighbours: the-neighbours.md
+  - Limits: limits.md
+  - Troubleshooting: troubleshooting.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md

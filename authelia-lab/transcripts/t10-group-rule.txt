@@ -1,0 +1,19 @@
+$ # grace signs in (same firstfactor call as ada). Then the group rule on /admin:
+$ ./authz.sh auth-request https://app.lab.local:8443/ cookies-grace.txt
+HTTP/1.1 200 OK
+Remote-User: grace
+Remote-Groups: readers
+Remote-Name: Grace Lab
+Remote-Email: grace@lab.local
+$ ./authz.sh auth-request https://app.lab.local:8443/admin cookies-grace.txt
+HTTP/1.1 200 OK
+Remote-User: grace
+Remote-Groups: readers
+Remote-Name: Grace Lab
+Remote-Email: grace@lab.local
+$ ./authz.sh auth-request https://app.lab.local:8443/admin cookies-ada.txt
+HTTP/1.1 200 OK
+Remote-User: ada
+Remote-Groups: admins,readers
+Remote-Name: Ada Lab
+Remote-Email: ada@lab.local

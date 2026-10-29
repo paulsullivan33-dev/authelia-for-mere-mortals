@@ -1,0 +1,10 @@
+$ # Regulation: max_retries 3 inside 2 minutes earns a 5 minute ban. Four wrong passwords for grace:
+{"status":"KO","message":"Authentication failed. Check your credentials."} HTTP 401
+{"status":"KO","message":"Authentication failed. Check your credentials."} HTTP 401
+{"status":"KO","message":"Authentication failed. Check your credentials."} HTTP 401
+{"status":"KO","message":"Authentication failed. Check your credentials."} HTTP 401
+$ # Now the CORRECT password, inside the ban window:
+{"status":"KO","message":"Authentication failed. Check your credentials."} HTTP 401
+$ # Authelias log for the same moment:
+time="2026-10-29T19:13:28Z" level=error msg="Unsuccessful 1FA authentication attempt by user 'grace' and they are banned until 7:18:27PM on October 29 2026 (+00:00)" method=POST path=/api/firstfactor remote_ip=127.0.0.1
+time="2026-10-29T19:13:28Z" level=error msg="Unsuccessful 1FA authentication attempt by user 'grace' and they are banned until 7:18:27PM on October 29 2026 (+00:00)" method=POST path=/api/firstfactor remote_ip=127.0.0.1

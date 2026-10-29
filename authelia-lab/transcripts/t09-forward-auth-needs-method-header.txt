@@ -1,0 +1,10 @@
+$ # forward-auth needs one more header (the log said: header X-Forwarded-Method is empty). With it added:
+$ ./authz.sh forward-auth https://app.lab.local:8443/            # no session
+HTTP/1.1 302 Found
+Location: https://auth.lab.local:9091/?rd=https%3A%2F%2Fapp.lab.local%3A8443%2F&rm=GET
+$ ./authz.sh forward-auth https://app.lab.local:8443/ cookies-ada.txt   # adas session
+HTTP/1.1 200 OK
+Remote-User: ada
+Remote-Groups: admins,readers
+Remote-Name: Ada Lab
+Remote-Email: ada@lab.local

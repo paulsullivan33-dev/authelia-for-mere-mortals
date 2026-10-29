@@ -1,0 +1,8 @@
+$ authelia --config configuration.yml   (SQLite schema migrates 0 -> 29 on first start; startup log:)
+time="2026-10-29T18:55:12Z" level=info msg="Authelia v4.39.28 is starting"
+time="2026-10-29T18:55:12Z" level=info msg="Log severity set to info"
+time="2026-10-29T18:55:12Z" level=info msg="Storage schema is being checked for updates"
+time="2026-10-29T18:55:12Z" level=info msg="Storage schema migration from 0 to 29 is being attempted"
+time="2026-10-29T18:55:12Z" level=info msg="Storage schema migration from 0 to 29 is complete"
+time="2026-10-29T18:55:13Z" level=info msg="Startup complete"
+time="2026-10-29T18:55:13Z" level=info msg="Listening for TLS connections on '127.0.0.1:9091' path '/'" server=main service=server
